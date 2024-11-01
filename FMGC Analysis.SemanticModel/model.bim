@@ -1,0 +1,179 @@
+{
+  "compatibilityLevel": 1550,
+  "model": {
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.137.1102.0 (24.10)"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Dataset\"]"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
+    "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Language": "en-US",
+            "Version": "1.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Dataset",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Sl. No.",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "62eeb70f-3fce-4e6a-afed-a857356e6c5d",
+            "sourceColumn": "Sl. No.",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "aab310be-6eb6-43e7-9e41-77093fe2180a",
+            "sourceColumn": "Month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Team Leader",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "dbf51fa5-1c27-4c5a-adb5-88bbe777cd6f",
+            "sourceColumn": "Team Leader",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Brands",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "73b13de6-7e20-4e35-a633-b102564f32a0",
+            "sourceColumn": "Brands",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Projection",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "lineageTag": "5650811c-3c0a-4b67-9477-a87a7634e008",
+            "sourceColumn": "Projection",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Placement",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "lineageTag": "fe15d2bb-d73e-488c-810a-9a6fa8dc78be",
+            "sourceColumn": "Placement",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Brand",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "5a8fab2c-934c-4fb4-8b93-9cc1ce618f0f",
+            "sourceColumn": "Brand",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "f2b929f6-1089-4854-a7b2-3408bb17a8a9",
+        "partitions": [
+          {
+            "name": "Dataset",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Excel.Workbook(File.Contents(\"H:\\_Portfolio Project Github\\Garments industry\\Data Set.xlsx\"), null, true),",
+                "    Dataset_Sheet = Source{[Item=\"Dataset\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Dataset_Sheet, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"Sl. No.\", Int64.Type}, {\"Month\", type date}, {\"Team Leader\", type text}, {\"Brands\", type text}, {\"Projection\", type number}, {\"Placement\", type number}, {\"Brand\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
