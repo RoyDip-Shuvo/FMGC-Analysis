@@ -4,14 +4,14 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
-        "y": 0
+        "x": 93.057057223670043,
+        "y": 495.55685895014648
       },
       "nodes": [
         {
           "location": {
-            "x": 0,
-            "y": 0
+            "x": 231,
+            "y": 1122.625
           },
           "nodeIndex": "Dataset",
           "nodeLineageTag": "f2b929f6-1089-4854-a7b2-3408bb17a8a9",
@@ -20,10 +20,75 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 741,
+            "y": 989.625
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "d0aff1a3-b3df-4323-93dc-f834750f7281",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 958,
+            "y": 884.125
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "68fa9b2b-7cba-4ff7-a61c-012435da031d",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 833.875
+          },
+          "nodeIndex": "Pseudo Prod Table",
+          "nodeLineageTag": "61cd9141-ba9c-4739-b531-7e816e3a0cd2",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1526,
+            "y": 590.0625
+          },
+          "nodeIndex": "Parameter",
+          "nodeLineageTag": "295c64e4-78bf-453c-868a-2f656368db07",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 414.00993199999857,
+            "y": 687.15514300000018
+          },
+          "nodeIndex": "Pseudo Prod Table B",
+          "nodeLineageTag": "028e3412-7779-4115-ac73-2c731c26d35a",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
-      "zoomValue": 100,
+      "zoomValue": 89.192590520569439,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

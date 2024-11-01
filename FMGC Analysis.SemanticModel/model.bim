@@ -1,5 +1,5 @@
 {
-  "compatibilityLevel": 1550,
+  "compatibilityLevel": 1601,
   "model": {
     "annotations": [
       {
@@ -12,7 +12,7 @@
       },
       {
         "name": "PBI_QueryOrder",
-        "value": "[\"Dataset\"]"
+        "value": "[\"Dataset\",\"StartDate\",\"EndDate\",\"DimDate\",\"_Measures\"]"
       },
       {
         "name": "PBI_ProTooling",
@@ -37,6 +37,73 @@
       "returnErrorValuesAsNull": true
     },
     "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "StartDate",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Date"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = #date(2024, 1, 1)",
+          "in",
+          "    Source"
+        ],
+        "kind": "m",
+        "lineageTag": "4f2ab737-d468-43f7-8a93-3de7df0da518"
+      },
+      {
+        "name": "EndDate",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Date"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = #date(2024, 12, 31)",
+          "in",
+          "    Source"
+        ],
+        "kind": "m",
+        "lineageTag": "6da3bea7-229d-4b79-b250-ffbc8e5448fc"
+      }
+    ],
+    "relationships": [
+      {
+        "name": "20d0d241-4e70-a2ac-db48-79953f962054",
+        "fromColumn": "Month",
+        "fromTable": "Dataset",
+        "toColumn": "Dates",
+        "toTable": "DimDate"
+      },
+      {
+        "name": "7d7521a9-2b4e-5e8f-9cd8-84bd647ff00c",
+        "fromColumn": "Brand",
+        "fromTable": "Dataset",
+        "toColumn": "Brand",
+        "toTable": "Pseudo Prod Table"
+      },
+      {
+        "name": "fafcb251-eb46-628a-de30-eac04ae14c5d",
+        "fromColumn": "Brands",
+        "fromTable": "Dataset",
+        "toColumn": "Brands",
+        "toTable": "Pseudo Prod Table B"
+      }
+    ],
     "sourceQueryCulture": "en-US",
     "tables": [
       {
@@ -45,6 +112,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -152,6 +223,19 @@
             "lineageTag": "5a8fab2c-934c-4fb4-8b93-9cc1ce618f0f",
             "sourceColumn": "Brand",
             "summarizeBy": "none"
+          },
+          {
+            "name": "Placement_Bucket",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "b4650b1b-4921-4ea7-890d-af1bffd3a6f4",
+            "sourceColumn": "Placement_Bucket",
+            "summarizeBy": "none"
           }
         ],
         "lineageTag": "f2b929f6-1089-4854-a7b2-3408bb17a8a9",
@@ -162,14 +246,682 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Excel.Workbook(File.Contents(\"H:\\_Portfolio Project Github\\Garments industry\\Data Set.xlsx\"), null, true),",
+                "    Source = Excel.Workbook(File.Contents(\"H:\\_Portfolio Project Github\\FMGC Analysis\\Data Set.xlsx\"), null, true),",
                 "    Dataset_Sheet = Source{[Item=\"Dataset\",Kind=\"Sheet\"]}[Data],",
                 "    #\"Promoted Headers\" = Table.PromoteHeaders(Dataset_Sheet, [PromoteAllScalars=true]),",
-                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"Sl. No.\", Int64.Type}, {\"Month\", type date}, {\"Team Leader\", type text}, {\"Brands\", type text}, {\"Projection\", type number}, {\"Placement\", type number}, {\"Brand\", type text}})",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"Sl. No.\", Int64.Type}, {\"Month\", type date}, {\"Team Leader\", type text}, {\"Brands\", type text}, {\"Projection\", type number}, {\"Placement\", type number}, {\"Brand\", type text}}),",
+                "    #\"Added Custom\" = Table.AddColumn(#\"Changed Type\", \"Placement_Bucket\", each if [Placement] <= 20000 then \"Low\"",
+                "else if [Placement] <= 50000 then \"Medium\"",
+                "else \"High\"),",
+                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Added Custom\",{{\"Month\", type date}}),",
+                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Changed Type1\",{\"Column10\", \"Column8\", \"Column9\"})",
                 "in",
-                "    #\"Changed Type\""
+                "    #\"Removed Columns\""
               ],
               "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "DimDate",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Dates",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isKey": true,
+            "lineageTag": "f6aa1353-b4b7-44ea-9efb-c45b55b634fa",
+            "sourceColumn": "Dates",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "1eaa69be-5d9d-4973-a10f-6753fbcbb40c",
+            "sourceColumn": "Year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "b9dcfade-9aa2-4cd8-9974-6783209e67a1",
+            "sourceColumn": "Month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Quarter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "373a65ed-5e1d-43f6-b431-80d813daa188",
+            "sourceColumn": "Quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Week of Year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "4e29bb20-22ff-40d9-a71f-24a3aaf61b40",
+            "sourceColumn": "Week of Year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Month Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "b2860d3e-410e-4a31-b9d7-224b392b5535",
+            "sortByColumn": "Month",
+            "sourceColumn": "Month Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Quarter Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "3a67a683-d837-4edd-85f2-cc4354fc0ea9",
+            "sortByColumn": "Quarter",
+            "sourceColumn": "Quarter Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Week Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "0cd8df75-2006-4a6a-b816-c592db1d7e66",
+            "sortByColumn": "Week of Year",
+            "sourceColumn": "Week Name",
+            "summarizeBy": "none"
+          }
+        ],
+        "dataCategory": "Time",
+        "lineageTag": "d0aff1a3-b3df-4323-93dc-f834750f7281",
+        "partitions": [
+          {
+            "name": "DimDate",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Duration = Duration.Days(EndDate-StartDate)+1,",
+                "    #\"List of date\" = List.Dates(StartDate, Duration, #duration(1,0,0,0)),",
+                "    #\"Converted to Table\" = Table.FromList(#\"List of date\", Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
+                "    #\"Renamed Columns\" = Table.RenameColumns(#\"Converted to Table\",{{\"Column1\", \"Dates\"}}),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\",{{\"Dates\", type date}}),",
+                "    #\"Inserted Year\" = Table.AddColumn(#\"Changed Type\", \"Year\", each Date.Year([Dates]), Int64.Type),",
+                "    #\"Inserted Month\" = Table.AddColumn(#\"Inserted Year\", \"Month\", each Date.Month([Dates]), Int64.Type),",
+                "    #\"Inserted Quarter\" = Table.AddColumn(#\"Inserted Month\", \"Quarter\", each Date.QuarterOfYear([Dates]), Int64.Type),",
+                "    #\"Inserted Week of Year\" = Table.AddColumn(#\"Inserted Quarter\", \"Week of Year\", each Date.WeekOfYear([Dates]), Int64.Type),",
+                "    #\"Inserted Month Name\" = Table.AddColumn(#\"Inserted Week of Year\", \"Month Name\", each Date.MonthName([Dates]), type text),",
+                "    #\"Extracted First Characters\" = Table.TransformColumns(#\"Inserted Month Name\", {{\"Month Name\", each Text.Start(_, 3), type text}}),",
+                "    #\"Added Quarter Name\" = Table.AddColumn(#\"Extracted First Characters\", \"Quarter Name\", each \"Q\"& Text.From([Quarter])),",
+                "    #\"Added Week Name\" = Table.AddColumn(#\"Added Quarter Name\", \"Week Name\", each \"W\"& Text.From([Week of Year]))",
+                "in",
+                "    #\"Added Week Name\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "_Measures",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "lineageTag": "68fa9b2b-7cba-4ff7-a61c-012435da031d",
+        "measures": [
+          {
+            "name": "Placement Total",
+            "expression": "SUM('Dataset'[Placement])",
+            "formatStringDefinition": {
+              "expression": [
+                "SWITCH(",
+                "    TRUE(),",
+                "    SELECTEDMEASURE() > 1000000, \"#,##0,,.00M\",",
+                "    SELECTEDMEASURE() > 1000, \"#,##0,.00K\"",
+                ")"
+              ]
+            },
+            "lineageTag": "321d0248-4fb8-4b45-899c-20c44831e1c6"
+          },
+          {
+            "name": "Projection Total",
+            "expression": "SUM('Dataset'[Projection])",
+            "formatStringDefinition": {
+              "expression": [
+                "SWITCH(",
+                "    TRUE(),",
+                "    SELECTEDMEASURE() > 1000000, \"#,##0,,.00M\",",
+                "    SELECTEDMEASURE() > 1000, \"#,##0,.00K\"",
+                ")"
+              ]
+            },
+            "lineageTag": "3fe0e8e7-8b79-489b-bf07-ab53fa183be9"
+          },
+          {
+            "name": "Varience",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDecimal\":true}"
+              }
+            ],
+            "expression": "[Projection Total] - [Placement Total]",
+            "formatString": "0",
+            "lineageTag": "5da0d5ed-42cd-4fe7-8558-d99dc3f8bb26"
+          },
+          {
+            "name": "Bar",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDecimal\":true}"
+              }
+            ],
+            "expression": "[Placement Total] - [Projection Total]",
+            "formatString": "0",
+            "lineageTag": "76b91753-c841-44e4-93ba-70ff483edbb9"
+          },
+          {
+            "name": "Icon",
+            "expression": [
+              "",
+              "VAR varinece = [Varience]",
+              "VAR icon = SWITCH(",
+              "    TRUE(),",
+              "    varinece > 0, \"▼\"",
+              ")",
+              "VAR result =  icon",
+              "RETURN",
+              "result"
+            ],
+            "lineageTag": "418c0d00-e787-4a33-bf3e-a91084612b70"
+          },
+          {
+            "name": "Guge High Value",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": "[Projection Total] * 1.15",
+            "lineageTag": "d7425624-091b-4129-8fa2-fc48a5a2bc93"
+          },
+          {
+            "name": "Guge minimum",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": "[Projection Total]*.7",
+            "lineageTag": "f3fcda49-aadb-4fa5-9882-707b2c935eb6"
+          },
+          {
+            "name": "Top N Sum Placement by Brand",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "displayFolder": "Brand Top",
+            "expression": [
+              "",
+              "VAR TopNSelected =                              -- capturing top value selected in the slicer",
+              "    SELECTEDVALUE ( Parameter[Parameter] )",
+              "VAR TopProdTable =",
+              "    TOPN (",
+              "        TopNSelected,",
+              "        ALLSELECTED ( 'Pseudo Prod Table' ),",
+              "        [Placement Total]",
+              "    )",
+              "VAR TopProdSales =",
+              "    CALCULATE (",
+              "        [Placement Total],",
+              "        KEEPFILTERS ( TopProdTable )",
+              "    )",
+              "VAR OtherSales =",
+              "    CALCULATE (",
+              "        [Placement Total],",
+              "        ALLSELECTED ( 'Pseudo Prod Table' )",
+              "    )",
+              "        - CALCULATE (",
+              "            [Placement Total],",
+              "            TopProdTable",
+              "        )",
+              "VAR CurrentProd =",
+              "    SELECTEDVALUE ( 'Pseudo Prod Table'[Brand] )",
+              "RETURN",
+              "    IF (",
+              "        CurrentProd <> \"Others\",",
+              "        TopProdSales,",
+              "        OtherSales",
+              "    )"
+            ],
+            "lineageTag": "840207f8-2930-49b2-97a2-2793744b4b9c"
+          },
+          {
+            "name": "Rank",
+            "displayFolder": "Brand Top",
+            "expression": [
+              "",
+              "IF (",
+              "    [Top N SUM]",
+              "        <> BLANK (),",
+              "    RANKX (",
+              "        TOPN (                                         ",
+              "            SELECTEDVALUE ( Parameter[Parameter] ),",
+              "            ALLSELECTED ( 'Pseudo Prod Table' ),",
+              "            [Placement Total]",
+              "        ),",
+              "        [Placement Total],       ",
+              "        ,",
+              "        DESC,",
+              "        DENSE",
+              "    )",
+              ")"
+            ],
+            "formatString": "0",
+            "lineageTag": "64ca28b5-4905-43d8-879c-15b37e05c904"
+          },
+          {
+            "name": "Top N SUM",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "displayFolder": "Brand Top",
+            "expression": [
+              "",
+              "VAR TOPNSelected = SELECTEDVALUE(Parameter[Parameter])",
+              "VAR CurrentProd = SELECTEDVALUE('Pseudo Prod Table'[Brand])",
+              "VAR TopProducts = ",
+              "    TOPN(",
+              "        TopNSelected,",
+              "        ALLSELECTED('Pseudo Prod Table'[Brand]),",
+              "        [Placement Total]",
+              "    )",
+              "VAR TopProdSales = ",
+              "    CALCULATE(",
+              "        [Placement Total],",
+              "        KEEPFILTERS( TopProducts )",
+              "    )",
+              "RETURN",
+              "    SWITCH(",
+              "        TRUE(),",
+              "        CurrentProd <> \"Others\",",
+              "        TopProdSales,",
+              "        CurrentProd = \"Others\",",
+              "            CALCULATE(",
+              "                [Placement Total],",
+              "                ALLSELECTED('Pseudo Prod Table'[Brand])",
+              "            ) - ",
+              "            CALCULATE(",
+              "                [Placement Total], ",
+              "                TopProducts",
+              "            )",
+              "    )"
+            ],
+            "lineageTag": "6b27b726-8c26-472c-9e0f-3cb439511072"
+          },
+          {
+            "name": "Top N Sum Sales Customers",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR TopNSelected =                              -- capturing top value selected in the slicer",
+              "    SELECTEDVALUE ( Parameter[Parameter] )",
+              "VAR TopProdTable =",
+              "    TOPN (",
+              "        TopNSelected,",
+              "        ALLSELECTED ( 'Pseudo Prod Table B' ),",
+              "        [Placement Total]",
+              "    )",
+              "VAR TopProdSales =",
+              "    CALCULATE (",
+              "        [Placement Total],",
+              "        KEEPFILTERS ( TopProdTable )",
+              "    )",
+              "VAR OtherSales =",
+              "    CALCULATE (",
+              "        [Placement Total],",
+              "        ALLSELECTED ( 'Pseudo Prod Table B' )",
+              "    )",
+              "        - CALCULATE (",
+              "            [Placement Total],",
+              "            TopProdTable",
+              "        )",
+              "VAR CurrentProd =",
+              "    SELECTEDVALUE ( 'Pseudo Prod Table B'[Brands] )",
+              "RETURN",
+              "    IF (",
+              "        CurrentProd <> \"Others\",",
+              "        TopProdSales,",
+              "        OtherSales",
+              "    )",
+              ""
+            ],
+            "lineageTag": "a581445d-d340-4a00-8ccc-403618c5360f"
+          },
+          {
+            "name": "Customers top N Sum",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR TOPNSelected = SELECTEDVALUE(Parameter[Parameter])",
+              "VAR CurrentProd = SELECTEDVALUE('Pseudo Prod Table B'[Brands])",
+              "VAR TopProducts = ",
+              "    TOPN(",
+              "        TopNSelected,",
+              "        ALLSELECTED('Pseudo Prod Table B'[Brands]),",
+              "        [Placement Total]",
+              "    )",
+              "VAR TopProdSales = ",
+              "    CALCULATE(",
+              "        [Placement Total],",
+              "        KEEPFILTERS( TopProducts )",
+              "    )",
+              "RETURN",
+              "    SWITCH(",
+              "        TRUE(),",
+              "        CurrentProd <> \"Others\",",
+              "        TopProdSales,",
+              "        CurrentProd = \"Others\",",
+              "            CALCULATE(",
+              "                [Placement Total],",
+              "                ALLSELECTED('Pseudo Prod Table B'[Brands])",
+              "            ) - ",
+              "            CALCULATE(",
+              "                [Placement Total], ",
+              "                TopProducts",
+              "            )",
+              "    )"
+            ],
+            "lineageTag": "03f16a4c-ba89-419f-aa23-e19d968927e1"
+          },
+          {
+            "name": "Customer Rank",
+            "expression": [
+              "",
+              "IF (",
+              "    [Customers top N Sum]",
+              "        <> BLANK (),",
+              "    RANKX (",
+              "        TOPN (                                         ",
+              "            SELECTEDVALUE ( Parameter[Parameter] ),",
+              "            ALLSELECTED ( 'Pseudo Prod Table B' ),",
+              "            [Placement Total]",
+              "        ),",
+              "        [Placement Total],       ",
+              "        ,",
+              "        DESC,",
+              "        DENSE",
+              "    )",
+              ")"
+            ],
+            "formatString": "0",
+            "lineageTag": "2b09ec38-8066-4e05-836a-acd823b1f360"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "_Measures",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i44FAA==\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Column1\", type text}}),",
+                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Changed Type\",{\"Column1\"})",
+                "in",
+                "    #\"Removed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Pseudo Prod Table",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "559a4260f8fa450e95a8257faefbe9f0"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Brand",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isNameInferred": true,
+            "lineageTag": "0e8fb294-7c58-4e13-9278-ae28a772bdeb",
+            "sourceColumn": "Dataset[Brand]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          }
+        ],
+        "lineageTag": "61cd9141-ba9c-4739-b531-7e816e3a0cd2",
+        "partitions": [
+          {
+            "name": "Pseudo Prod Table",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "",
+                "UNION(",
+                "    DISTINCT('Dataset'[Brand]),",
+                "    DATATABLE(",
+                "        \"Brand\", STRING,",
+                "        { {\"Others\"} }",
+                "    )",
+                ")",
+                ""
+              ],
+              "type": "calculated"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Parameter",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "877be4d35b5347b0a8545eeecfcf6396"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Parameter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "extendedProperties": [
+              {
+                "name": "ParameterMetadata",
+                "type": "json",
+                "value": {
+                  "version": 0
+                }
+              }
+            ],
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "isNameInferred": false,
+            "lineageTag": "18ab83f4-57d2-44e4-9932-dc01bb904bac",
+            "sourceColumn": "[Value]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          }
+        ],
+        "lineageTag": "295c64e4-78bf-453c-868a-2f656368db07",
+        "measures": [
+          {
+            "name": "Parameter Value",
+            "expression": "SELECTEDVALUE('Parameter'[Parameter], 1)",
+            "formatString": "0",
+            "lineageTag": "e3f5f40e-5855-4cb6-87eb-f50099c78329"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Parameter",
+            "mode": "import",
+            "source": {
+              "expression": "GENERATESERIES(0, 10, 1)",
+              "type": "calculated"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Pseudo Prod Table B",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "c988233e379342d6975f4698533c577f"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Brands",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isNameInferred": true,
+            "lineageTag": "ba91eb96-4930-4049-b680-58885b786e68",
+            "sourceColumn": "Dataset[Brands]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          }
+        ],
+        "lineageTag": "028e3412-7779-4115-ac73-2c731c26d35a",
+        "partitions": [
+          {
+            "name": "Pseudo Prod Table B",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "",
+                "UNION(",
+                "    DISTINCT('Dataset'[Brands]),",
+                "    DATATABLE(",
+                "        \"Brands\", STRING,",
+                "        { {\"Others\"} }",
+                "    )",
+                ")"
+              ],
+              "type": "calculated"
             }
           }
         ]
