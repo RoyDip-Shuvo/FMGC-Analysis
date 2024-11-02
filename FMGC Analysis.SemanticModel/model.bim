@@ -2004,6 +2004,134 @@
                   }
                 ]
               },
+              "v_Measures_measure.bar_chart_detail": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "_Measures",
+                    "ConceptualProperty": "Bar Chart Detail"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "bar chart detail": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "detail": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "chart detail": {
+                      "State": "Generated",
+                      "Type": "Noun"
+                    }
+                  },
+                  {
+                    "bar chart aspect": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.508
+                    }
+                  },
+                  {
+                    "bar chart element": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.508
+                    }
+                  },
+                  {
+                    "bar chart fact": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.508
+                    }
+                  },
+                  {
+                    "chart aspect": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "chart element": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "chart fact": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "bar diagram detail": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "bar plan detail": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "bar chart part": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "bar chart feature": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  }
+                ]
+              },
               "v_Measures_measure.bottom_brands_placement": {
                 "Definition": {
                   "Binding": {
@@ -2721,16 +2849,6 @@
                       "Type": "Noun",
                       "Weight": 0.476
                     }
-                  },
-                  {
-                    "Varience %": {
-                      "Source": {
-                        "Agent": "PowerBI.VisualColumnRename",
-                        "Type": "External"
-                      },
-                      "State": "Suggested",
-                      "Weight": 0.9
-                    }
                   }
                 ]
               },
@@ -2767,6 +2885,16 @@
                       "Type": "Noun",
                       "Weight": 0.727
                     }
+                  },
+                  {
+                    "Order PL": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
                   }
                 ]
               },
@@ -2802,6 +2930,16 @@
                       "State": "Suggested",
                       "Type": "Noun",
                       "Weight": 0.727
+                    }
+                  },
+                  {
+                    "Order PJ": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
                     }
                   }
                 ]
@@ -3319,6 +3457,25 @@
                       "State": "Suggested",
                       "Type": "Noun",
                       "Weight": 0.599
+                    }
+                  }
+                ],
+                "Visibility": {
+                  "Value": "Hidden"
+                }
+              },
+              "v_Measures_measure.v_Varience_FormatString_varience_FormatString": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "_Measures",
+                    "ConceptualProperty": "_Varience FormatString"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "_varience FormatString": {
+                      "State": "Generated"
                     }
                   }
                 ],
@@ -4384,6 +4541,59 @@
                 },
                 "State": "Generated"
               },
+              "v_Measures_measure_has_bar_chart_detail": {
+                "Binding": {
+                  "ConceptualEntity": "_Measures"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "v_Measures_measure.bar_chart_detail"
+                      },
+                      "Subject": {
+                        "Role": "v_Measures_measure"
+                      }
+                    },
+                    "ID": "Phrasing_measures_have_bar_chart_detail",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  },
+                  {
+                    "ID": "Phrasing_measures_are_bar_bar_chart_detail",
+                    "Preposition": {
+                      "Object": {
+                        "Role": "v_Measures_measure.bar_chart_detail"
+                      },
+                      "Prepositions": [
+                        {
+                          "bar": {
+                            "State": "Generated"
+                          }
+                        }
+                      ],
+                      "Subject": {
+                        "Role": "v_Measures_measure"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "v_Measures_measure": {
+                    "Target": {
+                      "Entity": "v_Measures_measure"
+                    }
+                  },
+                  "v_Measures_measure.bar_chart_detail": {
+                    "Target": {
+                      "Entity": "v_Measures_measure.bar_chart_detail"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
               "v_Measures_measure_has_bottom_brands_placement": {
                 "Binding": {
                   "ConceptualEntity": "_Measures"
@@ -5135,14 +5345,15 @@
           },
           {
             "name": "Varience",
-            "annotations": [
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"isDecimal\":true}"
-              }
-            ],
-            "expression": "[Projection Total] - [Placement Total]",
-            "formatString": "0",
+            "expression": "[Placement Total] - [Projection Total]",
+            "formatStringDefinition": {
+              "expression": [
+                "SWITCH(",
+                "    TRUE(),",
+                "    SELECTEDMEASURE() > 1000, \"#,##0,.0K\"",
+                ")"
+              ]
+            },
             "lineageTag": "5da0d5ed-42cd-4fe7-8558-d99dc3f8bb26"
           },
           {
@@ -5164,7 +5375,7 @@
               "VAR varinece = [Varience]",
               "VAR icon = SWITCH(",
               "    TRUE(),",
-              "    varinece > 0, \"▼\"",
+              "    varinece < 0, \"▼\"",
               ")",
               "VAR Varience_pct = [Varience %]",
               "VAR result =  FORMAT(Varience_pct, \"0.##%\") & \" \" & icon",
@@ -5435,6 +5646,17 @@
             "expression": "DIVIDE(([Placement Total] - [Projection Total]), [Projection Total])",
             "formatString": "0.00%;-0.00%;0.00%",
             "lineageTag": "2eda3b18-3272-40e0-848f-d109b06a0675"
+          },
+          {
+            "name": "Bar Chart Detail",
+            "expression": [
+              "",
+              "VAR Varience = [Varience]",
+              "VAR Result_1 = IF(Varience>=0, \"Achive \" , \"Diff: \")",
+              "RETURN",
+              "Result_1 & FORMAT(Varience, \"#,##0,.0K\")"
+            ],
+            "lineageTag": "fcaf0e7e-3d5a-4380-8457-8e50183f12f9"
           }
         ],
         "partitions": [
