@@ -2123,6 +2123,16 @@
                       "Type": "Noun",
                       "Weight": 0.5
                     }
+                  },
+                  {
+                    "Order Placement Qty": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
                   }
                 ]
               },
